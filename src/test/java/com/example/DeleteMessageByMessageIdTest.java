@@ -56,8 +56,8 @@ public class DeleteMessageByMessageIdTest {
         HttpResponse<String> response = webClient.send(request, HttpResponse.BodyHandlers.ofString());
         int status = response.statusCode();
         Assertions.assertEquals(200, status, "Expected Status Code 200 - Actual Code was: " + status);
-        Integer actualResult = objectMapper.readValue(response.body().toString(), Integer.class);
-        Assertions.assertTrue(actualResult.equals(1), "Expected to modify 1 row, but actually modified " + actualResult + " rows.");
+        Integer actualResult = objectMapper.readValue(response.body(), Integer.class);
+        Assertions.assertEquals(1, actualResult, "Expected to modify 1 row, but actually modified " + actualResult + " rows.");
     }
 
     /**
@@ -76,7 +76,7 @@ public class DeleteMessageByMessageIdTest {
         HttpResponse<String> response = webClient.send(request, HttpResponse.BodyHandlers.ofString());
         int status = response.statusCode();
         Assertions.assertEquals(200, status, "Expected Status Code 200 - Actual Code was: " + status);
-        String actualResult = response.body().toString();
-        Assertions.assertTrue(actualResult.equals(""), "Expected empty response body, but actually " + actualResult + ".");
+        String actualResult = response.body();
+        Assertions.assertEquals("0", actualResult, "Expected response body to be '0', but actually was '" + actualResult + "'.");
     }
 }
